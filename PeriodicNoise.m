@@ -1,0 +1,31 @@
+function [Output]=PeriodicNoise(Input)
+Layer_Red=Input(:,:,1);
+Layer_Green=Input(:,:,2);
+Layer_Blue=Input(:,:,3);
+%%
+%Layer_Red
+[x,y]=meshgrid(1:size(Layer_Red ,2),1:size(Layer_Red,1));
+p=1+sin(x+y/1.5);
+tp=(double(Layer_Red)./128+p)/4;
+z=sqrt((x-129).^2+(y-129).^2);
+br=(z<47|z>51);
+Layer_Red=tp.*br;
+%Layer_Green
+[x,y]=meshgrid(1:size(Layer_Green,2),1:size(Layer_Green,1));
+p=1+sin(x+y/1.5);
+tp=(double(Layer_Green)./128+p)/4;
+z=sqrt((x-129).^2+(y-129).^2);
+br=(z<47|z>51);
+Layer_Green=tp.*br;
+%Layer_Blue
+[x,y]=meshgrid(1:size(Layer_Blue,2),1:size(Layer_Blue,1));
+p=1+sin(x+y/1.5);
+tp=(double(Layer_Blue)./128+p)/4;
+z=sqrt((x-129).^2+(y-129).^2);
+br=(z<47|z>51);
+Layer_Blue=tp.*br;
+%%
+Output(:,:,1)=Layer_Red;
+Output(:,:,2)=Layer_Green;
+Output(:,:,3)=Layer_Blue;
+end
